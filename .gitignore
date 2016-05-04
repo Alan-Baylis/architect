@@ -16,6 +16,7 @@ local.properties
 .settings/
 .loadpath
 library/
+temp/
 
 # External tool builders
 .externalToolBuilders/
