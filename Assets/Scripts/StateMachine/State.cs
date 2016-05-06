@@ -1,12 +1,9 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Architect.States {
 
-    [Serializable]
+    [System.Serializable]
     public abstract class State : MonoBehaviour {
         [SerializeField]
         private string key;

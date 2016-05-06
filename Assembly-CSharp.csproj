@@ -45,6 +45,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Level Editor\EditorLoadLevel.cs" />
+     <Compile Include="Assets\Scripts\Level Editor\EditorMainMenu.cs" />
      <Compile Include="Assets\Scripts\Properties\Attributes\EnumFlagsAttribute.cs" />
      <Compile Include="Assets\Scripts\StateMachine\State.cs" />
      <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />

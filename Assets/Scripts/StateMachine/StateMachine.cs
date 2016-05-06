@@ -18,11 +18,17 @@ namespace Architect.States {
         private bool changingState = false;
         private bool returningToPreviousState = false;
 
-        #region Initialization
-        void Awake() {
-            initialized = false;
+        #region Getters & Setters
+        public bool Initialized {
+            get { return initialized; }
         }
 
+        public bool ReturningToPreviousState {
+            get { return returningToPreviousState; }
+        }
+        #endregion
+
+        #region Initialization
         void Start() {
             if (states != null) {
                 foreach (State state in states) {
@@ -64,11 +70,11 @@ namespace Architect.States {
                         currentState.Enable();
                     }
 
-#if UNITY_EDITOR
-                    if (nextState == null) {
-                        Debug.LogWarning(string.Format("State: {0} on Object: {1} does not exist in StateMachine", aStateKey, gameObject));
-                    }
-#endif
+                    #if UNITY_EDITOR
+                        if (nextState == null) {
+                            Debug.LogWarning(string.Format("State: {0} on Object: {1} does not exist in StateMachine", aStateKey, gameObject));
+                        }
+                    #endif
                 }
             }
 
@@ -86,16 +92,6 @@ namespace Architect.States {
 
                 previousState = null;
             }
-        }
-        #endregion
-
-        #region Getters & Setters
-        public bool Initialized {
-            get { return initialized; }
-        }
-
-        public bool ReturningToPreviousState {
-            get { return returningToPreviousState; }
         }
         #endregion
 
