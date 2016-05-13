@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Architect.States {
+namespace Architect.States.Editor {
 
+    [DisallowMultipleComponent]
     public class EditorMainMenu : State {
 
     }

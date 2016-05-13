@@ -45,9 +45,9 @@ namespace Architect.States {
                 }
             }
 
-#if UNITY_EDITOR
-            Debug.LogWarning(string.Format("Transition \"{0}\" on object \"{1}\" does not exist", aState.GetType().Name, gameObject.name));
-#endif
+            #if UNITY_EDITOR
+                Debug.LogWarning(string.Format("Transition \"{0}\" on object \"{1}\" does not exist", aState.GetType().Name, gameObject.name));
+            #endif
 
             return false;
         }

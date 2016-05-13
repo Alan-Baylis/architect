@@ -1,34 +1,29 @@
 using UnityEngine;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Architect.States {
 
-    [Serializable]
+    [System.Serializable]
+    [DisallowMultipleComponent]
     public class StateMachine : MonoBehaviour {
         [SerializeField]
         private State currentState;
-        [SerializeField, HideInInspector]
+        [SerializeField]
         private List<State> states;
 
         private State previousState;
-
-        private bool initialized = false;
+        
         private bool changingState = false;
-        private bool returningToPreviousState = false;
 
         #region Getters & Setters
-        public bool Initialized {
-            get { return initialized; }
-        }
-
-        public bool ReturningToPreviousState {
-            get { return returningToPreviousState; }
+        public bool ChangingState {
+            get { return changingState; }
         }
         #endregion
 
         #region Initialization
+        // Initialize all states. Enable and start executing the current state (chosen in the inspector).
         void Start() {
             if (states != null) {
                 foreach (State state in states) {
@@ -43,26 +38,27 @@ namespace Architect.States {
                     Debug.LogWarning(string.Format("StatMachine: {0} does not have a current state. Please set it in the editor!", this));
                 }
             }
-
-            initialized = true;
         }
         #endregion
 
-        // With more StateMachines it would be worth making a master or controller with a single Update that updates all state machines
+        #region Update Functions
         void Update() {
-            if (initialized && currentState != null && changingState == false) {
+            if (currentState != null && changingState == false) {
                 currentState.Action();
             }
         }
+        #endregion
 
-        #region State Transition
-        // Change the state given a valid state key. Store the previous state in case we want to go back.
+        #region State Transitions
+        /// <summary>
+        /// Change the state given a valid state key. Store the previous state in case we want to go back.
+        /// </summary>
         public void ChangeState(string aStateKey) {
-            changingState = true;
+            if (changingState == false) {
+                changingState = true;
 
-            if (states != null) {
-                if (string.IsNullOrEmpty(aStateKey) == false) {
-                    State nextState = states.Find(s => s.Key == aStateKey);
+                if (states != null && string.IsNullOrEmpty(aStateKey) == false) {
+                    State nextState = states.Find(s => s.Key == aStateKey.Trim());
                     if (nextState != null && currentState.CanTransition(nextState)) {
                         currentState.Disable();
                         previousState = currentState;
@@ -76,21 +72,21 @@ namespace Architect.States {
                         }
                     #endif
                 }
-            }
 
-            changingState = false;
+                changingState = false;
+            }
         }
 
-        // Return to the previous state while clearing out the previous state data (may not want to do this).
         public void ReturnToPreviousState() {
-            if (previousState != null) {
-                returningToPreviousState = true;
+            if (previousState != null && changingState == false) {
+                changingState = true;
 
                 currentState.Disable();
                 currentState = previousState;
                 currentState.Enable();
 
                 previousState = null;
+                changingState = false;
             }
         }
         #endregion

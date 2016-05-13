@@ -18,10 +18,10 @@ namespace Architect.Editor {
         private List<State> states;
         private List<string> availableStates = new List<string>();  // All states available on the current StateMachine
 
-        // TODO: Add toggle to show Name/FullName (?)
         private List<GUIContent> possibleStates = new List<GUIContent>();   // All states that can be added to the current StateMachine (text: Name, tooltip: FullName)
 
         private int currentStateIndex = 0;
+        private const string NONE = "None";
 
         #region Initialize
         public void Awake() {
@@ -50,7 +50,7 @@ namespace Architect.Editor {
                 if (state != null) {
                     availableStates.Add(state.GetType().Name);
                 } else {
-                    availableStates.Add("None");
+                    availableStates.Add(NONE);
                 }
             }
 
@@ -62,7 +62,7 @@ namespace Architect.Editor {
                 }
             }
 
-            possibleStates.Add(new GUIContent("None", "None"));
+            possibleStates.Add(new GUIContent(NONE, NONE));
             Type[] types = Assembly.GetAssembly(typeof(State)).GetTypes();
             foreach (Type type in types) {
                 if (type.IsSubclassOf(typeof(State))) {
@@ -75,7 +75,6 @@ namespace Architect.Editor {
         #region Display
         public override void OnInspectorGUI() {
             DrawInspector(serializedObject);
-            DisplayStateUI();
         }
 
         // This method is DrawDefaultInspector but extended to allow for overriable fields
@@ -86,6 +85,12 @@ namespace Architect.Editor {
             bool enterChildren = true;
             while (property.NextVisible(enterChildren)) {
                 switch (property.name) {
+                    case "m_Script":
+                        EditorGUI.BeginDisabledGroup(true);
+                        EditorGUILayout.PropertyField(property, true, new GUILayoutOption[0]);
+                        enterChildren = false;
+                        EditorGUI.EndDisabledGroup();
+                        break;
                     case "currentState":
                         EditorGUILayout.BeginHorizontal();
                         EditorGUILayout.LabelField(FormatLabel(property.name), GUILayout.Width(halfWidth));
@@ -100,11 +105,9 @@ namespace Architect.Editor {
                         EditorGUILayout.EndHorizontal();
                         enterChildren = false;
                         break;
-                    case "m_Script":
-                        EditorGUI.BeginDisabledGroup(true);
-                        EditorGUILayout.PropertyField(property, true, new GUILayoutOption[0]);
+                    case "states":
+                        DisplayStateUI();
                         enterChildren = false;
-                        EditorGUI.EndDisabledGroup();
                         break;
                     default:
                         EditorGUILayout.PropertyField(property, true, new GUILayoutOption[0]);
@@ -120,21 +123,21 @@ namespace Architect.Editor {
         #region States
         private void DisplayStateUI() {
             EditorGUILayout.BeginVertical();
-
+            
             for (int i = 0; i < availableStates.Count; i++) {
                 EditorGUILayout.BeginHorizontal();
 
-                // Update state slot
+                // Find the state index based on either the Name/FullName (Display/Path)
                 int stateIndex = possibleStates.FindIndex(s => s.text == availableStates[i]);
+                if (stateIndex == -1) {
+                    stateIndex = possibleStates.FindIndex(s => s.tooltip == availableStates[i]);
+                }
+
+                // Update state slot
                 int newStateIndex = EditorGUILayout.Popup(stateIndex, possibleStates.ToArray(), GUILayout.Height(16.0f));
-                if (stateIndex != newStateIndex) {
+                if (stateIndex != newStateIndex && possibleStates[newStateIndex].tooltip != NONE) {
                     if (currentTarget.GetComponent(possibleStates[newStateIndex].tooltip) == null) {
                         Undo.RecordObject(currentTarget, "Adding / Changing State");
-
-                        State state = currentTarget.GetComponent(availableStates[i]) as State;
-                        if (state != null) {
-                            Reflection.SetPrivateFieldValue<bool>(state, "safeToDelete", true);
-                        }
 
                         availableStates[i] = possibleStates[newStateIndex].tooltip;
 
@@ -142,7 +145,18 @@ namespace Architect.Editor {
                         states[i] = (State) currentTarget.gameObject.AddComponent(componentType);
 
                         Reflection.SetPrivateFieldValue<List<State>>(currentTarget, "states", states);
+                    } else {
+                        Debug.LogWarning(string.Format("Can't add '{0}' to Editor Controller because a '{0}' is already added to the game object!", possibleStates[newStateIndex].text));
                     }
+                }
+
+                // Toggle between Name/FullName (Display/Path)
+                if (GUILayout.Button("<", GUILayout.Height(16), GUILayout.Width(16))) {
+                    GUIContent stateContent = possibleStates[stateIndex];
+
+                    string name = stateContent.text;
+                    stateContent.text = stateContent.tooltip;
+                    stateContent.tooltip = name;
                 }
 
                 // Remove selected state
@@ -156,10 +170,6 @@ namespace Architect.Editor {
 
                     states.RemoveAt(i);
                     availableStates.RemoveAt(i);
-
-                    if (availableStates.Count > 0 && states[0] != null) {
-                        currentState.objectReferenceValue = states[0];
-                    }
                 }
 
                 EditorGUILayout.EndHorizontal();
@@ -169,7 +179,7 @@ namespace Architect.Editor {
 
             // Add a new empty state slot
             if (GUILayout.Button("Add state", GUILayout.Height(16))) {
-                availableStates.Add("None");
+                availableStates.Add(NONE);
                 states.Add(null);
             }
         }

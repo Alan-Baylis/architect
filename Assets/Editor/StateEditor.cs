@@ -15,13 +15,12 @@ namespace Architect.Editor {
         private int transitionMask = 0;
 
         private List<State> transitions;
-        private List<string> stateNames = new List<string>();
+        private List<string> displayNames = new List<string>();
+        private List<string> statePaths = new List<string>();
 
         #region Initialize
         public void Awake() {
-            if (currentTarget == null) {
-                currentTarget = (State) target;
-            }
+            currentTarget = (State) target;
 
             SetupStates();
         }
@@ -31,7 +30,8 @@ namespace Architect.Editor {
             states.RemoveAt(states.FindIndex(s => s.GetType().Name == currentTarget.GetType().Name));
 
             foreach (State state in states) {
-                stateNames.Add(state.GetType().Name);
+                displayNames.Add(state.GetType().Name);
+                statePaths.Add(state.GetType().FullName);
             }
 
             // Setup the transition mask value from the stored transitions
@@ -39,7 +39,11 @@ namespace Architect.Editor {
 
             if (transitions != null) {
                 for (int i = 0; i < transitions.Count; i++) {
-                    transitionMask |= (1 << (stateNames.FindIndex(s => s == transitions[i].GetType().Name)));
+                    try {
+                        transitionMask |= (1 << (displayNames.FindIndex(s => s == transitions[i].GetType().Name)));
+                    } catch (Exception exception) {
+                        Debug.LogError(string.Format("State {0} is allowed a transition that no longer exists with error: {1}", currentTarget.name, exception));
+                    }
                 }
 
                 SetTransitions(transitionMask);
@@ -62,7 +66,7 @@ namespace Architect.Editor {
             while (property.NextVisible(enterChildren)) {
                 switch (property.name) {
                     case "transitions":
-                        SetTransitions(EditorGUILayout.MaskField("Allowed Transitions", transitionMask, stateNames.ToArray()));
+                        SetTransitions(EditorGUILayout.MaskField("Allowed Transitions", transitionMask, displayNames.ToArray()));
                         enterChildren = false;
                         break;
                     case "m_Script":
@@ -83,10 +87,6 @@ namespace Architect.Editor {
         }
         #endregion
 
-        public void OnDisable() {
-            SafeDelete();
-        }
-
         #region Utility Functions
         private void SetTransitions(int aNewMask, bool aOverride = false) {
             if (transitionMask != aNewMask || aOverride) {
@@ -96,9 +96,9 @@ namespace Architect.Editor {
                 transitions = new List<State>();
 
                 // Using the, bitwise, mask set the list of transitions based on what current selected
-                for (int i = 0; i < stateNames.Count; i++) {
+                for (int i = 0; i < displayNames.Count; i++) {
                     if ((transitionMask & (1 << i)) != 0) {
-                        Type componentType = Type.GetType(stateNames[i] + ",Assembly-CSharp");
+                        Type componentType = Type.GetType(statePaths[i] + ",Assembly-CSharp");
                         transitions.Add((State) currentTarget.GetComponent(componentType));
                     }
                 }
@@ -106,6 +106,12 @@ namespace Architect.Editor {
                 Undo.RecordObject(currentTarget, "Changed State Transitions");
                 Reflection.SetPrivateFieldValue<List<State>>(currentTarget, "transitions", transitions);
             }
+        }
+        #endregion
+
+        #region Cleanup Functions
+        public void OnDisable() {
+            SafeDelete();
         }
 
         private void SafeDelete() {

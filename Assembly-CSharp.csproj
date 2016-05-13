@@ -45,8 +45,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Data\Levels\LevelData.cs" />
+     <Compile Include="Assets\Scripts\Data\Levels\ModuleData.cs" />
+     <Compile Include="Assets\Scripts\Level Editor\EditorEditLevel.cs" />
      <Compile Include="Assets\Scripts\Level Editor\EditorLoadLevel.cs" />
      <Compile Include="Assets\Scripts\Level Editor\EditorMainMenu.cs" />
+     <Compile Include="Assets\Scripts\Level Editor\EditorSaveLevel.cs" />
+     <Compile Include="Assets\Scripts\Level Editor\EditorSharedData.cs" />
+     <Compile Include="Assets\Scripts\Managers\ArchitectManager.cs" />
      <Compile Include="Assets\Scripts\Properties\Attributes\EnumFlagsAttribute.cs" />
      <Compile Include="Assets\Scripts\StateMachine\State.cs" />
      <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
