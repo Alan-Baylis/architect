@@ -136,18 +136,18 @@ namespace Architect.Editor {
                 // Update state slot
                 int newStateIndex = EditorGUILayout.Popup(stateIndex, possibleStates.ToArray(), GUILayout.Height(16.0f));
                 if (stateIndex != newStateIndex && possibleStates[newStateIndex].tooltip != NONE) {
-                    if (currentTarget.GetComponent(possibleStates[newStateIndex].tooltip) == null) {
-                        Undo.RecordObject(currentTarget, "Adding / Changing State");
-
-                        availableStates[i] = possibleStates[newStateIndex].tooltip;
-
-                        Type componentType = Type.GetType(availableStates[i] + ",Assembly-CSharp");
-                        states[i] = (State) currentTarget.gameObject.AddComponent(componentType);
-
-                        Reflection.SetPrivateFieldValue<List<State>>(currentTarget, "states", states);
-                    } else {
-                        Debug.LogWarning(string.Format("Can't add '{0}' to Editor Controller because a '{0}' is already added to the game object!", possibleStates[newStateIndex].text));
+                    if (currentTarget.GetComponent(possibleStates[newStateIndex].tooltip) != null) {
+                        Debug.LogWarning(string.Format("Adding duplicate state '{0}' to gameobject", possibleStates[newStateIndex].text));
                     }
+
+                    Undo.RecordObject(currentTarget, "Adding / Changing State");
+
+                    availableStates[i] = possibleStates[newStateIndex].tooltip;
+
+                    Type componentType = Type.GetType(availableStates[i] + ",Assembly-CSharp");
+                    states[i] = (State) currentTarget.gameObject.AddComponent(componentType);
+
+                    Reflection.SetPrivateFieldValue<List<State>>(currentTarget, "states", states);
                 }
 
                 // Toggle between Name/FullName (Display/Path)
@@ -163,7 +163,7 @@ namespace Architect.Editor {
                 if (GUILayout.Button("X", GUILayout.Height(16), GUILayout.Width(16))) {
                     Undo.RecordObject(currentTarget, "Removing State");
 
-                    State state = currentTarget.GetComponent(availableStates[i]) as State;
+                    State state = states[i];
                     if (state != null) {
                         Reflection.SetPrivateFieldValue<bool>(state, "safeToDelete", true);
                     }

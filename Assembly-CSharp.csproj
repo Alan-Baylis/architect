@@ -53,10 +53,19 @@
      <Compile Include="Assets\Scripts\Level Editor\EditorSaveLevel.cs" />
      <Compile Include="Assets\Scripts\Level Editor\EditorSharedData.cs" />
      <Compile Include="Assets\Scripts\Managers\ArchitectManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\PoolManager.cs" />
+     <Compile Include="Assets\Scripts\Object Pool\NewBehaviourScript.cs" />
+     <Compile Include="Assets\Scripts\Object Pool\ObjectPool.cs" />
+     <Compile Include="Assets\Scripts\Object Pool\PoolableObject.cs" />
+     <Compile Include="Assets\Scripts\Object Pool\SingletonObjectPool.cs" />
      <Compile Include="Assets\Scripts\Properties\Attributes\EnumFlagsAttribute.cs" />
      <Compile Include="Assets\Scripts\StateMachine\State.cs" />
      <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Generics\GenericDictionary.cs" />
+     <Compile Include="Assets\Scripts\Utilities\Generics\MultiDictionary.cs" />
      <Compile Include="Assets\Scripts\Utilities\Reflection.cs" />
+     <Compile Include="Assets\Tests\PoolableObjectTestObject.cs" />
+     <Compile Include="Assets\Tests\TestObjectClass.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Programs/Unity 5.3.1/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

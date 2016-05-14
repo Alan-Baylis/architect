@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Architect.States {
 
     [System.Serializable]
-    public abstract class State : MonoBehaviour {
+    public class State : MonoBehaviour {
         [SerializeField]
         private string key;
         [SerializeField]
