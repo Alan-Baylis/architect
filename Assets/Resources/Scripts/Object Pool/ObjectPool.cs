@@ -9,7 +9,9 @@ namespace Resources.Pooling {
         [SerializeField]
         private GameObject prefab;
         [SerializeField]
-        private int poolSize = 1;
+        private int size = 1;
+        [SerializeField, Tooltip("If set the ObjectPool will create a map between its associated objects and the given component")]
+        private Component component;
 
         private Stack<GameObject> pooledObjects;
         private GenericDictionary componentMap;
@@ -26,21 +28,40 @@ namespace Resources.Pooling {
         /// </summary>
         private void Start() {
             if (prefab != null) {
-                Initialize(prefab, poolSize);
+                if (component != null) {
+                    InitializeWithComponent(prefab, size);
+                } else {
+                    Initialize(prefab, size);
+                }
             }
         }
 
         /// <summary>
-        /// Initialize and setup a pool with GameObjects
+        /// Initialize and setup a pool with Gameobjects
         /// </summary>
         public virtual void Initialize(GameObject aPrefab, int aAmount = 1) {
-            Initialize<PoolableObject>(aPrefab, aAmount);
+            pooledObjects = new Stack<GameObject>(aAmount);
+
+            prefab = aPrefab;
+
+            ObjectPoolManager.Instance.Add(prefab, this);
+
+            for (int i = 0; i < aAmount; i++) {
+                CreateObject();
+            }
         }
 
         /// <summary>
-        /// Initialize and setup a pool with GameObjects as well as store a mapping between these GameObjects and the given component for quick and cheap access.
+        /// Initialize and setup a pool with GameObjects mapped to the component 'PoolableObject'
         /// </summary>
-        public virtual void Initialize<T>(GameObject aPrefab, int aAmount = 1) where T : Component {
+        public virtual void InitializeWithComponent(GameObject aPrefab, int aAmount = 1) {
+            InitializeWithComponent<PoolableObject>(aPrefab, aAmount);
+        }
+
+        /// <summary>
+        /// Initialize and setup a pool with GameObjects mapped to the given component
+        /// </summary>
+        public virtual void InitializeWithComponent<T>(GameObject aPrefab, int aAmount = 1) where T : Component {
             pooledObjects = new Stack<GameObject>(aAmount);
             componentMap = new GenericDictionary(aAmount);
 
@@ -56,7 +77,29 @@ namespace Resources.Pooling {
 
         #region Creation
         /// <summary>
-        /// Create a new GameObject for the pool and store the given component
+        /// Create a new GameObject for the pool
+        /// </summary>
+        protected virtual GameObject CreateObject() {
+            GameObject newObject = Instantiate(prefab);
+            newObject.SetActive(false);
+            newObject.transform.SetParent(this.transform, false);
+
+            // Initialize the poolable object
+            PoolableObject newPoolableObject = newObject.GetComponent<PoolableObject>();
+            if (newPoolableObject != null) {
+                newPoolableObject.Initialize(this);
+            } else {
+                Debug.LogError(string.Format("Prefab '{0}' does not contain component '{1}'", prefab, typeof(PoolableObject)));
+                return null;
+            }
+
+            pooledObjects.Push(newObject);
+
+            return newObject;
+        }
+
+        /// <summary>
+        /// Create a new GameObject for the pool and map it with the given component
         /// </summary>
         protected virtual GameObject CreateObject<T>() where T : Component {
             GameObject newObject = Instantiate(prefab);
@@ -91,6 +134,21 @@ namespace Resources.Pooling {
         #endregion
 
         #region Get Functions
+        /// <summary>
+        /// Get the next GameObject from the pool. If the pool is empty a new object will be created.
+        /// </summary>
+        public GameObject GetObject() {
+            if (pooledObjects.Count == 0) {
+                CreateObject();
+            }
+
+            GameObject freedObject = pooledObjects.Pop();
+            freedObject.transform.SetParent(null, false);
+            freedObject.SetActive(true);
+
+            return freedObject;
+        }
+
         /// <summary>
         /// Get the next GameObject from the pool. If the pool is empty a new object will be created.
         /// </summary>

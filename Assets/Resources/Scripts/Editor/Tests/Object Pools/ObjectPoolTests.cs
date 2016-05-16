@@ -15,7 +15,7 @@ public class ObjectPoolTests {
 
         GameObject newPoolableObject = new GameObject("Pooled Object 1");
         PoolableObject poolableCompontent = newPoolableObject.AddComponent<PoolableObject>();
-        newPool.Initialize<PoolableObject>(newPoolableObject);
+        newPool.InitializeWithComponent<PoolableObject>(newPoolableObject);
         
         PoolableObject testComponent = ObjectPoolManager.Instance.Get(newPoolableObject).GetObjectComponent<PoolableObject>();
 
@@ -32,7 +32,7 @@ public class ObjectPoolTests {
 
         testA.intValue = 5;
 
-        newPool.Initialize<PoolableObject>(newPoolableObject);
+        newPool.InitializeWithComponent<PoolableObject>(newPoolableObject);
         
         PoolableObjectTestObject testComponent = ObjectPoolManager.Instance.Get(newPoolableObject).GetObjectComponent<PoolableObjectTestObject>();
 
@@ -50,7 +50,7 @@ public class ObjectPoolTests {
         TestObject testA = newPoolableObject.AddComponent<TestObject>();
         testA.intValue = 5;
 
-        newPool.Initialize<TestObject>(newPoolableObject);
+        newPool.InitializeWithComponent<TestObject>(newPoolableObject);
         
         TestObject testComponent = ObjectPoolManager.Instance.Get(newPoolableObject).GetObjectComponent<TestObject>();
 
@@ -69,7 +69,7 @@ public class ObjectPoolTests {
         TestObject testA = newPoolableObject.AddComponent<TestObject>();
         testA.intValue = 5;
 
-        newPool.Initialize<TestObject>(newPoolableObject);
+        newPool.InitializeWithComponent<TestObject>(newPoolableObject);
 
         TestObject testObject = null;
         for (int i = 0; i < aObjectsToGetFromPool; i++) {
@@ -90,7 +90,7 @@ public class ObjectPoolTests {
         GameObject newPoolableObject = new GameObject("Pooled Object 5");
         newPoolableObject.AddComponent<PoolableObject>();
 
-        newPool.Initialize<PoolableObject>(newPoolableObject, aObjectCount);
+        newPool.InitializeWithComponent<PoolableObject>(newPoolableObject, aObjectCount);
 
         // The loop starts at 0 so we have to offset otherwise the values will be 1 off
         Assert.AreEqual(aObjectCount, ObjectPoolManager.Instance.Get(newPoolableObject).Count);
