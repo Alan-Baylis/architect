@@ -13,6 +13,7 @@ namespace Resources.Pooling {
         [SerializeField, Tooltip("If set the ObjectPool will create a map between its associated objects and the given component")]
         private Component component;
 
+        private bool initialized = false;
         private Stack<GameObject> pooledObjects;
         private GenericDictionary componentMap;
 
@@ -40,14 +41,20 @@ namespace Resources.Pooling {
         /// Initialize and setup a pool with Gameobjects
         /// </summary>
         public virtual void Initialize(GameObject aPrefab, int aAmount = 1) {
-            pooledObjects = new Stack<GameObject>(aAmount);
+            if (initialized == false) {
+                initialized = true;
 
-            prefab = aPrefab;
+                pooledObjects = new Stack<GameObject>(aAmount);
 
-            ObjectPoolManager.Instance.Add(prefab, this);
+                prefab = aPrefab;
 
-            for (int i = 0; i < aAmount; i++) {
-                CreateObject();
+                ObjectPoolManager.Instance.Add(prefab, this);
+
+                for (int i = 0; i < aAmount; i++) {
+                    CreateObject();
+                }
+            } else {
+                Debug.LogWarning(string.Format("ObjectPool '{0}' already initialized. Avoid initializing pools more than once!", this.gameObject));
             }
         }
 
@@ -62,15 +69,21 @@ namespace Resources.Pooling {
         /// Initialize and setup a pool with GameObjects mapped to the given component
         /// </summary>
         public virtual void InitializeWithComponent<T>(GameObject aPrefab, int aAmount = 1) where T : Component {
-            pooledObjects = new Stack<GameObject>(aAmount);
-            componentMap = new GenericDictionary(aAmount);
+            if (initialized == false) {
+                initialized = true;
 
-            prefab = aPrefab;
+                pooledObjects = new Stack<GameObject>(aAmount);
+                componentMap = new GenericDictionary(aAmount);
 
-            ObjectPoolManager.Instance.Add(prefab, this);
+                prefab = aPrefab;
 
-            for (int i = 0; i < aAmount; i++) {
-                CreateObject<T>();
+                ObjectPoolManager.Instance.Add(prefab, this);
+
+                for (int i = 0; i < aAmount; i++) {
+                    CreateObject<T>();
+                }
+            } else {
+                Debug.LogWarning(string.Format("ObjectPool '{0}' already initialized. Avoid initializing pools more than once!", this.gameObject));
             }
         }
         #endregion
@@ -123,7 +136,7 @@ namespace Resources.Pooling {
                 if (newObjectComponent != null) {
                     componentMap.Add(newObject, newObjectComponent);
                 } else {
-                    Debug.LogWarning(string.Format("Prefab '{0}' does not contain component '{1}'", prefab, typeof(T)));
+                    Debug.LogError(string.Format("Prefab '{0}' does not contain component '{1}'", prefab, typeof(T)));
                 }
             }
 
