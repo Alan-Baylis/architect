@@ -17,7 +17,7 @@ namespace Resources.Utils {
             StringBuilder newLabel = new StringBuilder(aText.Length);
             int offset = 0;
 
-            // Add a space before each capital letter in the label unless the capitalized letter is followed by another capitalized letter (UI, GUI, etc)
+            // Add a space before each capital letter in the text unless the capitalized letter is followed by another capitalized letter (AI, GUI, etc)
             for (int i = 0; i < aText.Length; i++) {
                 if (i + offset < aText.Length && char.IsUpper(aText[i + offset])) {
                     newLabel.Append(SPACE);
@@ -27,8 +27,8 @@ namespace Resources.Utils {
                 newLabel.Append(aText[i]);
             }
 
-            // Capitalize the first character of the label
-            newLabel.Replace(newLabel[0], char.ToUpper(newLabel[0]), 0, 1);
+            // Capitalize the first character of the text
+            newLabel[0] = char.ToUpper(newLabel[0]);
 
             return newLabel.ToString();
         }
