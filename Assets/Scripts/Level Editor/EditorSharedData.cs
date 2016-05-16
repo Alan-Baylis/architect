@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
-using Architect.States.Editor;
 
-public class EditorSharedData : MonoBehaviour {
-    
+namespace Resources.States.Editor.Data {
+
+    public class EditorSharedData : MonoBehaviour {
+
+
+    }
 
 }

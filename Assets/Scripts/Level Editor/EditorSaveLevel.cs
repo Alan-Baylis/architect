@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Architect.States.Editor {
+namespace Resources.States.Editor {
 
     public class EditorSaveLevel : State {
 

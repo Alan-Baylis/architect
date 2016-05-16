@@ -45,11 +45,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Editor\BaseCustomEditor.cs" />
-     <Compile Include="Assets\Editor\Drawers\EnumFlagsAttributeDrawer.cs" />
-     <Compile Include="Assets\Editor\StateEditor.cs" />
-     <Compile Include="Assets\Editor\StateMachineEditor.cs" />
-     <Compile Include="Assets\Editor\Tests\Object Pools\ObjectPoolTests.cs" />
+     <Compile Include="Assets\Resources\Scripts\Editor\Tests\Object Pools\ObjectPoolTests.cs" />
+     <Compile Include="Assets\Resources\Scripts\Properties\Editor\Drawers\EnumFlagsAttributeDrawer.cs" />
+     <Compile Include="Assets\Resources\Scripts\StateMachine\Editor\StateEditor.cs" />
+     <Compile Include="Assets\Resources\Scripts\StateMachine\Editor\StateMachineEditor.cs" />
+     <Compile Include="Assets\Resources\Scripts\UI\Elements\Magnetic\Editor\MagneticElementEditor.cs" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>E:/Programs/Unity 5.3.1/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>

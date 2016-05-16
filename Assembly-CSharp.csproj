@@ -45,6 +45,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Resources\Scripts\Object Pool\ObjectPool.cs" />
+     <Compile Include="Assets\Resources\Scripts\Object Pool\ObjectPoolManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\Object Pool\PoolableObject.cs" />
+     <Compile Include="Assets\Resources\Scripts\Object Pool\SingletonObjectPool.cs" />
+     <Compile Include="Assets\Resources\Scripts\Properties\Attributes\EnumFlagsAttribute.cs" />
+     <Compile Include="Assets\Resources\Scripts\StateMachine\State.cs" />
+     <Compile Include="Assets\Resources\Scripts\StateMachine\StateMachine.cs" />
+     <Compile Include="Assets\Resources\Scripts\Testing Objects\PoolableObjectTestObject.cs" />
+     <Compile Include="Assets\Resources\Scripts\Testing Objects\TestObject.cs" />
+     <Compile Include="Assets\Resources\Scripts\UI\Elements\Fade\FadeElement.cs" />
+     <Compile Include="Assets\Resources\Scripts\UI\Elements\Fade\FadeRecursiveElement.cs" />
+     <Compile Include="Assets\Resources\Scripts\UI\Elements\Magnetic\MagneticElement.cs" />
+     <Compile Include="Assets\Resources\Scripts\Utilities\Generics\GenericDictionary.cs" />
+     <Compile Include="Assets\Resources\Scripts\Utilities\Generics\MultiDictionary.cs" />
+     <Compile Include="Assets\Resources\Scripts\Utilities\Reflection.cs" />
+     <Compile Include="Assets\Resources\Scripts\Utilities\StringUtils.cs" />
      <Compile Include="Assets\Scripts\Data\Levels\LevelData.cs" />
      <Compile Include="Assets\Scripts\Data\Levels\ModuleData.cs" />
      <Compile Include="Assets\Scripts\Level Editor\EditorEditLevel.cs" />
@@ -53,19 +69,6 @@
      <Compile Include="Assets\Scripts\Level Editor\EditorSaveLevel.cs" />
      <Compile Include="Assets\Scripts\Level Editor\EditorSharedData.cs" />
      <Compile Include="Assets\Scripts\Managers\ArchitectManager.cs" />
-     <Compile Include="Assets\Scripts\Managers\PoolManager.cs" />
-     <Compile Include="Assets\Scripts\Object Pool\NewBehaviourScript.cs" />
-     <Compile Include="Assets\Scripts\Object Pool\ObjectPool.cs" />
-     <Compile Include="Assets\Scripts\Object Pool\PoolableObject.cs" />
-     <Compile Include="Assets\Scripts\Object Pool\SingletonObjectPool.cs" />
-     <Compile Include="Assets\Scripts\Properties\Attributes\EnumFlagsAttribute.cs" />
-     <Compile Include="Assets\Scripts\StateMachine\State.cs" />
-     <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
-     <Compile Include="Assets\Scripts\Utilities\Generics\GenericDictionary.cs" />
-     <Compile Include="Assets\Scripts\Utilities\Generics\MultiDictionary.cs" />
-     <Compile Include="Assets\Scripts\Utilities\Reflection.cs" />
-     <Compile Include="Assets\Tests\PoolableObjectTestObject.cs" />
-     <Compile Include="Assets\Tests\TestObjectClass.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Programs/Unity 5.3.1/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
