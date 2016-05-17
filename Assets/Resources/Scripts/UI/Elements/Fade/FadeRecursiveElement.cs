@@ -1,15 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class FadeRecursiveElement : MonoBehaviour {
+namespace Resources.UI {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public class FadeRecursiveElement : MonoBehaviour {
+
+    }
+
 }

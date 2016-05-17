@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 namespace Resources.Pooling {
 
@@ -23,6 +22,12 @@ namespace Resources.Pooling {
 
             DontDestroyOnLoad(gameObject);
         }
+
+        public override void InitializeWithComponent(GameObject aPrefab, System.Type aType, int aAmount = 1) {
+            base.InitializeWithComponent(aPrefab, aAmount);
+
+            DontDestroyOnLoad(gameObject);
+        }
         #endregion
 
         #region Creation
@@ -35,6 +40,13 @@ namespace Resources.Pooling {
 
         protected override GameObject CreateObject<T>() {
             GameObject newObject = base.CreateObject<T>();
+            DontDestroyOnLoad(newObject);
+
+            return newObject;
+        }
+
+        protected override GameObject CreateObject(System.Type aType) {
+            GameObject newObject = base.CreateObject(aType);
             DontDestroyOnLoad(newObject);
 
             return newObject;

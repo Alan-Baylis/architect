@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Resources.Properties;
 
 namespace Resources.UI {
 
@@ -7,18 +8,18 @@ namespace Resources.UI {
     /// An UI elemtent that will magnet to other, specified, objects when moved around
     /// </summary>
     public class MagneticElement : MonoBehaviour {
-        [SerializeField, Tooltip("Layers that when collided with will result in the triggering of enabled magnetic properties")]
+        [SerializeField, Tooltip("Layers that when collided with will result in this object triggering of enabled magnetic properties")]
         private LayerMask targets;
 
-        [SerializeField, Tooltip("When within range of a target element slow the object")]
+        [SerializeField, Tooltip("When within range of a target element slow this object")]
         private bool doesSlow = true;
-        [SerializeField]
+        [SerializeField, RequireProperty("doesSlow")]
         private SlowAttributes slowAttributes;
 
-        [SerializeField, Tooltip("When within range of a target element lerp the object to the center of the target when movement stops")]
-        private bool doesLock = false;
-        [SerializeField]
-        private LockAttributes lockAttributes;
+        [SerializeField, Tooltip("When within range of a target element snap this object to the center of the target when movement stops")]
+        private bool doesSnap = false;
+        [SerializeField, RequireProperty("doesSnap")]
+        private SnapAttributes snapAttributes;
 
         #region SlowAttributes Struct
         [System.Serializable]
@@ -36,7 +37,7 @@ namespace Resources.UI {
 
         #region LockAttributes Struct
         [System.Serializable]
-        private struct LockAttributes {
+        private struct SnapAttributes {
             [SerializeField]
             private float speed;
 

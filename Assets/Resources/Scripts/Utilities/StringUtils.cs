@@ -8,7 +8,8 @@ namespace Resources.Utils {
     /// Utilites relating to the usage of strings
     /// </summary>
     public static class StringUtils {
-        private const char SPACE = ' ';
+        public const char SPACE = ' ';
+        public const string NONE = "None";
 
         /// <summary>
         /// Format the given string to match that of Unity's inspector field names (ex. rateOfFire => Rate Of Fire)

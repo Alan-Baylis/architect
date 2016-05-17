@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Resources.Properties;
 using Resources.Utils;
 
 namespace Resources.Pooling {
@@ -10,12 +11,14 @@ namespace Resources.Pooling {
         private GameObject prefab;
         [SerializeField]
         private int size = 1;
-        [SerializeField, Tooltip("If set the ObjectPool will create a map between its associated objects and the given component")]
-        private Component component;
+        [SerializeField, ComponentPopup(typeof(Component)), Tooltip("If set the ObjectPool will create a map between its associated objects and the given component")]
+        private string component;
+        [SerializeField, Range(0, 1)]
+        private bool sucks;
 
         private bool initialized = false;
         private Stack<GameObject> pooledObjects;
-        private GenericDictionary componentMap;
+        private Dictionary<GameObject, Component> componentMap;
 
         #region Getters & Setters
         public int Count {
@@ -29,8 +32,9 @@ namespace Resources.Pooling {
         /// </summary>
         private void Start() {
             if (prefab != null) {
-                if (component != null) {
-                    InitializeWithComponent(prefab, size);
+                if (string.IsNullOrEmpty(component) == false) {
+                    System.Type type = System.Type.GetType(component);
+                    InitializeWithComponent(prefab, type, size);
                 } else {
                     Initialize(prefab, size);
                 }
@@ -44,7 +48,7 @@ namespace Resources.Pooling {
             if (initialized == false) {
                 initialized = true;
 
-                pooledObjects = new Stack<GameObject>(aAmount);
+                pooledObjects = new Stack<GameObject>();
 
                 prefab = aPrefab;
 
@@ -73,7 +77,7 @@ namespace Resources.Pooling {
                 initialized = true;
 
                 pooledObjects = new Stack<GameObject>(aAmount);
-                componentMap = new GenericDictionary(aAmount);
+                componentMap = new Dictionary<GameObject, Component>(aAmount);
 
                 prefab = aPrefab;
 
@@ -87,6 +91,28 @@ namespace Resources.Pooling {
             }
         }
         #endregion
+
+        /// <summary>
+        /// Initialize and setup a pool with GameObjects mapped to the given component
+        /// </summary>
+        public virtual void InitializeWithComponent(GameObject aPrefab, System.Type aType, int aAmount = 1) {
+            if (initialized == false) {
+                initialized = true;
+
+                pooledObjects = new Stack<GameObject>(aAmount);
+                componentMap = new Dictionary<GameObject, Component>(aAmount);
+
+                prefab = aPrefab;
+
+                ObjectPoolManager.Instance.Add(prefab, this);
+
+                for (int i = 0; i < aAmount; i++) {
+                    CreateObject(aType);
+                }
+            } else {
+                Debug.LogWarning(string.Format("ObjectPool '{0}' already initialized. Avoid initializing pools more than once!", this.gameObject));
+            }
+        }
 
         #region Creation
         /// <summary>
@@ -103,7 +129,6 @@ namespace Resources.Pooling {
                 newPoolableObject.Initialize(this);
             } else {
                 Debug.LogError(string.Format("Prefab '{0}' does not contain component '{1}'", prefab, typeof(PoolableObject)));
-                return null;
             }
 
             pooledObjects.Push(newObject);
@@ -125,7 +150,6 @@ namespace Resources.Pooling {
                 newPoolableObject.Initialize(this);
             } else {
                 Debug.LogError(string.Format("Prefab '{0}' does not contain component '{1}'", prefab, typeof(PoolableObject)));
-                return null;
             }
 
             // Setup the component mapping based on the given component type
@@ -137,6 +161,38 @@ namespace Resources.Pooling {
                     componentMap.Add(newObject, newObjectComponent);
                 } else {
                     Debug.LogError(string.Format("Prefab '{0}' does not contain component '{1}'", prefab, typeof(T)));
+                }
+            }
+
+            pooledObjects.Push(newObject);
+
+            return newObject;
+        }
+
+        /// <summary>
+        /// Create a new GameObject for the pool and map it with the given component
+        /// </summary>
+        protected virtual GameObject CreateObject(System.Type aType) {
+            GameObject newObject = Instantiate(prefab);
+            newObject.SetActive(false);
+            newObject.transform.SetParent(this.transform, false);
+
+            // Initialize the poolable object
+            PoolableObject newPoolableObject = newObject.GetComponent<PoolableObject>();
+            if (newPoolableObject != null) {
+                newPoolableObject.Initialize(this);
+            } else {
+                Debug.LogError(string.Format("Prefab '{0}' does not contain component '{1}'", prefab, typeof(PoolableObject)));
+            }
+
+            // Setup the component mapping based on the given component type
+            if (typeof(PoolableObject) == aType) {
+                componentMap.Add(newObject, newPoolableObject);
+            } else {
+                if (newObject.GetComponent(aType) != null) {
+                    componentMap.Add(newObject, newObject.GetComponent(aType));
+                } else {
+                    Debug.LogError(string.Format("Prefab '{0}' does not contain component '{1}'", prefab, aType));
                 }
             }
 
@@ -188,7 +244,7 @@ namespace Resources.Pooling {
         /// Get the given GameObject's stored component.
         /// </summary>
         public T GetObjectComponent<T>(GameObject aObject) where T : Component {
-            return componentMap.Get<T>(aObject);
+            return componentMap[aObject] as T;
         }
         #endregion
 

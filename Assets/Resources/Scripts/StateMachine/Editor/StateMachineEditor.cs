@@ -21,10 +21,9 @@ namespace Resources.Editor {
         private List<GUIContent> possibleStates = new List<GUIContent>();   // All states that can be added to the current StateMachine (text: Name, tooltip: FullName)
 
         private int currentStateIndex = 0;
-        private const string NONE = "None";
 
         #region Initialize
-        public void Awake() {
+        public void OnEnable() {
             currentTarget = (StateMachine) target;
 
             SetupStates();
@@ -50,7 +49,7 @@ namespace Resources.Editor {
                 if (state != null) {
                     availableStates.Add(state.GetType().Name);
                 } else {
-                    availableStates.Add(NONE);
+                    availableStates.Add(StringUtils.NONE);
                 }
             }
 
@@ -62,7 +61,7 @@ namespace Resources.Editor {
                 }
             }
 
-            possibleStates.Add(new GUIContent(NONE, NONE));
+            possibleStates.Add(new GUIContent(StringUtils.NONE, StringUtils.NONE));
             Type[] types = Assembly.GetAssembly(typeof(State)).GetTypes();
             foreach (Type type in types) {
                 if (type.IsSubclassOf(typeof(State))) {
@@ -134,7 +133,7 @@ namespace Resources.Editor {
 
                 // Update state slot
                 int newStateIndex = EditorGUILayout.Popup(stateIndex, possibleStates.ToArray(), GUILayout.Height(16.0f));
-                if (stateIndex != newStateIndex && possibleStates[newStateIndex].tooltip != NONE) {
+                if (stateIndex != newStateIndex && possibleStates[newStateIndex].tooltip != StringUtils.NONE) {
                     if (currentTarget.GetComponent(possibleStates[newStateIndex].tooltip) != null) {
                         Debug.LogWarning(string.Format("Adding duplicate state '{0}' to gameobject", possibleStates[newStateIndex].text));
                     }
@@ -178,7 +177,7 @@ namespace Resources.Editor {
 
             // Add a new empty state slot
             if (GUILayout.Button("Add state", GUILayout.Height(16))) {
-                availableStates.Add(NONE);
+                availableStates.Add(StringUtils.NONE);
                 states.Add(null);
             }
         }

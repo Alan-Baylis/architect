@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using Resources.States;
 
-namespace Resources.States.Editor {
+namespace Architect.States.Editor {
 
     public class EditorMainMenu : State {
 
