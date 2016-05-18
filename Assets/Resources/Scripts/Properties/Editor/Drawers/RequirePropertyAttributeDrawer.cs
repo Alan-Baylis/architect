@@ -21,11 +21,7 @@ namespace Resources.Properties {
             }
 
             EditorGUI.BeginDisabledGroup(requiredProperty.boolValue == false);
-            if (aProperty.isExpanded) {
-                EditorGUI.PropertyField(aRect, aProperty, true);
-            } else {
-                EditorGUI.PropertyField(aRect, aProperty, false);
-            }
+            EditorGUI.PropertyField(aRect, aProperty, true);
             EditorGUI.EndDisabledGroup();
         }
         #endregion

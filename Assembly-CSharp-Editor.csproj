@@ -51,6 +51,7 @@
      <Compile Include="Assets\Resources\Scripts\Properties\Editor\Drawers\BasePropertyDrawer.cs" />
      <Compile Include="Assets\Resources\Scripts\Properties\Editor\Drawers\ComponentPopupAttributeDrawer.cs" />
      <Compile Include="Assets\Resources\Scripts\Properties\Editor\Drawers\EnumFlagsAttributeDrawer.cs" />
+     <Compile Include="Assets\Resources\Scripts\Properties\Editor\Drawers\ReadOnlyAttributeDrawer.cs" />
      <Compile Include="Assets\Resources\Scripts\Properties\Editor\Drawers\RequirePropertyAttributeDrawer.cs" />
      <Compile Include="Assets\Resources\Scripts\StateMachine\Editor\StateEditor.cs" />
      <Compile Include="Assets\Resources\Scripts\StateMachine\Editor\StateMachineEditor.cs" />

@@ -69,9 +69,11 @@ namespace Resources.UI {
 
         #region Update
         private void Update() {
-            Vector3 targetPosition = transform.position;
-            targetPosition.x += Input.GetAxis("Horizontal");
-            targetPosition.y += Input.GetAxis("Vertical");
+            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            //Vector3 targetPosition = transform.position;
+            //targetPosition.x += Input.GetAxis("Horizontal");
+            //targetPosition.y += Input.GetAxis("Vertical");
             targetPosition.z = 0.0f;
 
             float currentSpeed = cursorSpeed;

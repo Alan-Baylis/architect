@@ -51,6 +51,7 @@
      <Compile Include="Assets\Resources\Scripts\Object Pool\SingletonObjectPool.cs" />
      <Compile Include="Assets\Resources\Scripts\Properties\Attributes\ComponentPopupAttribute.cs" />
      <Compile Include="Assets\Resources\Scripts\Properties\Attributes\EnumFlagsAttribute.cs" />
+     <Compile Include="Assets\Resources\Scripts\Properties\Attributes\ReadOnlyAttribute.cs" />
      <Compile Include="Assets\Resources\Scripts\Properties\Attributes\RequirePropertyAttribute.cs" />
      <Compile Include="Assets\Resources\Scripts\StateMachine\State.cs" />
      <Compile Include="Assets\Resources\Scripts\StateMachine\StateMachine.cs" />
