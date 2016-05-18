@@ -10,7 +10,7 @@ namespace Resources.Editor {
 
     [CustomEditor(typeof(StateMachine), true)]
     [CanEditMultipleObjects]
-    class StateMachineEditor : UnityEditor.Editor {
+    class StateMachineEditor : BaseEditor {
         private StateMachine currentTarget;
 
         private SerializedProperty currentState;
@@ -85,10 +85,8 @@ namespace Resources.Editor {
             while (property.NextVisible(enterChildren)) {
                 switch (property.name) {
                     case "m_Script":
-                        EditorGUI.BeginDisabledGroup(true);
-                        EditorGUILayout.PropertyField(property, true, new GUILayoutOption[0]);
+                        DisplayDisabledGroup(property);
                         enterChildren = false;
-                        EditorGUI.EndDisabledGroup();
                         break;
                     case "currentState":
                         EditorGUILayout.BeginHorizontal();

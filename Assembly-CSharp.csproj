@@ -57,8 +57,7 @@
      <Compile Include="Assets\Resources\Scripts\Testing Objects\PoolableObjectTestObject.cs" />
      <Compile Include="Assets\Resources\Scripts\Testing Objects\TestObject.cs" />
      <Compile Include="Assets\Resources\Scripts\UI\Elements\Fade\FadeElement.cs" />
-     <Compile Include="Assets\Resources\Scripts\UI\Elements\Fade\FadeRecursiveElement.cs" />
-     <Compile Include="Assets\Resources\Scripts\UI\Elements\Magnetic\MagneticElement.cs" />
+     <Compile Include="Assets\Resources\Scripts\UI\Elements\Magnetic\MagneticCursor.cs" />
      <Compile Include="Assets\Resources\Scripts\Utilities\ConstUtils.cs" />
      <Compile Include="Assets\Resources\Scripts\Utilities\Generics\GenericDictionary.cs" />
      <Compile Include="Assets\Resources\Scripts\Utilities\Generics\MultiDictionary.cs" />

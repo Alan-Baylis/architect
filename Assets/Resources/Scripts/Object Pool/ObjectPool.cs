@@ -13,8 +13,6 @@ namespace Resources.Pooling {
         private int size = 1;
         [SerializeField, ComponentPopup(typeof(Component)), Tooltip("If set the ObjectPool will create a map between its associated objects and the given component")]
         private string component;
-        [SerializeField, Range(0, 1)]
-        private bool sucks;
 
         private bool initialized = false;
         private Stack<GameObject> pooledObjects;
