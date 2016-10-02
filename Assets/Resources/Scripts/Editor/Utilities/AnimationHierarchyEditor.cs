@@ -5,7 +5,7 @@ using Resource.Utils;
 
 namespace Resource.Editor {
 
-    public class AnimationHierarchyFixer : EditorWindow {
+    public class AnimationHierarchyEditor : EditorWindow {
         private const int fieldWidth = 175;
 
         private Animator selectedAnimator = null;
@@ -86,7 +86,7 @@ namespace Resource.Editor {
         #region Initialize
         [MenuItem("Window/Animation Hierarchy Editor")]
         static void ShowWindow() {
-            AnimationHierarchyFixer window = GetWindow<AnimationHierarchyFixer>("Anim Hierarchy");
+            AnimationHierarchyEditor window = GetWindow<AnimationHierarchyEditor>("Anim Hierarchy");
             window.minSize = new Vector2(765.0f, 500.0f);
             window.maxSize = new Vector2(765, 500.0f);
 
