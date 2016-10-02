@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Resources.States {
+namespace Resource.States {
 
     [System.Serializable]
     [DisallowMultipleComponent]

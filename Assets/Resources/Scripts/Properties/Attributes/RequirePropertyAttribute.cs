@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Resources.Properties {
+namespace Resource.Properties {
 
     /// <summary>
     /// Require the given property to be set to true (active) for this property to be enabled and modifiable.

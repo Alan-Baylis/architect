@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-namespace Resources.Editor {
+namespace Resource.Editor {
 
     public class BaseEditor : UnityEditor.Editor {
 

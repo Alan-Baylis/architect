@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using Resources.Properties;
-using Resources.Utils;
+using Resource.Properties;
+using Resource.Utils;
 
-namespace Resources.Pooling {
+namespace Resource.Pooling {
 
     public class ObjectPool : MonoBehaviour {
         [SerializeField]
@@ -14,6 +14,9 @@ namespace Resources.Pooling {
         [SerializeField, ComponentPopup(typeof(Component)), Tooltip("If set the ObjectPool will create a map between its associated objects and the given component")]
         private string component;
 
+        // Can this object pool be destroyed by the ObjectPoolManager when cleaning
+        protected bool canDestroy = true;
+
         private bool initialized = false;
         private Stack<GameObject> pooledObjects;
         private Dictionary<GameObject, Component> componentMap;
@@ -21,6 +24,10 @@ namespace Resources.Pooling {
         #region Getters & Setters
         public int Count {
             get { return pooledObjects.Count; }
+        }
+
+        public bool CanDestroy {
+            get { return canDestroy; }
         }
         #endregion
 
@@ -61,13 +68,6 @@ namespace Resources.Pooling {
         }
 
         /// <summary>
-        /// Initialize and setup a pool with GameObjects mapped to the component 'PoolableObject'
-        /// </summary>
-        public virtual void InitializeWithComponent(GameObject aPrefab, int aAmount = 1) {
-            InitializeWithComponent<PoolableObject>(aPrefab, aAmount);
-        }
-
-        /// <summary>
         /// Initialize and setup a pool with GameObjects mapped to the given component
         /// </summary>
         public virtual void InitializeWithComponent<T>(GameObject aPrefab, int aAmount = 1) where T : Component {
@@ -88,7 +88,6 @@ namespace Resources.Pooling {
                 Debug.LogWarning(string.Format("ObjectPool '{0}' already initialized. Avoid initializing pools more than once!", this.gameObject));
             }
         }
-        #endregion
 
         /// <summary>
         /// Initialize and setup a pool with GameObjects mapped to the given component
@@ -111,6 +110,7 @@ namespace Resources.Pooling {
                 Debug.LogWarning(string.Format("ObjectPool '{0}' already initialized. Avoid initializing pools more than once!", this.gameObject));
             }
         }
+        #endregion
 
         #region Creation
         /// <summary>

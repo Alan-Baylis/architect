@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Resources.Pooling {
+namespace Resource.Pooling {
 
     public class SingletonObjectPool : ObjectPool {
 
@@ -8,24 +8,21 @@ namespace Resources.Pooling {
         public override void Initialize(GameObject aPrefab, int aAmount = 1) {
             base.Initialize(aPrefab, aAmount);
 
-            DontDestroyOnLoad(gameObject);
-        }
-
-        public override void InitializeWithComponent(GameObject aPrefab, int aAmount = 1) {
-            base.InitializeWithComponent(aPrefab, aAmount);
-
+            canDestroy = true;
             DontDestroyOnLoad(gameObject);
         }
 
         public override void InitializeWithComponent<T>(GameObject aPrefab, int aAmount = 1) {
             base.InitializeWithComponent<T>(aPrefab, aAmount);
 
+            canDestroy = true;
             DontDestroyOnLoad(gameObject);
         }
 
         public override void InitializeWithComponent(GameObject aPrefab, System.Type aType, int aAmount = 1) {
-            base.InitializeWithComponent(aPrefab, aAmount);
+            base.InitializeWithComponent(aPrefab, aType, aAmount);
 
+            canDestroy = true;
             DontDestroyOnLoad(gameObject);
         }
         #endregion

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-namespace Resources.Properties {
+namespace Resource.Properties {
 
     /// <summary>
     /// 

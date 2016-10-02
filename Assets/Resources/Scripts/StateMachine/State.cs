@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Resources.States {
+namespace Resource.States {
 
     [System.Serializable]
     public class State : MonoBehaviour {

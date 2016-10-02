@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
-using Resources.Properties;
+using Resource.Properties;
 
-namespace Resources.UI {
+namespace Resource.UI {
 
     /// <summary>
     /// An UI elemtent that will magnet to other, specified, objects when moved around.
@@ -12,7 +12,7 @@ namespace Resources.UI {
         [SerializeField]
         private float cursorSpeed = 2.0f;
         [SerializeField, Tooltip("Layers that when collided with will result in this object triggering of enabled magnetic properties")]
-        private LayerMask targets;
+        private LayerMask magneticLayers;
 
         [SerializeField, Tooltip("When within range of a target element slow this object")]
         private bool doesSlow = true;
@@ -69,21 +69,21 @@ namespace Resources.UI {
 
         #region Update
         private void Update() {
-            Vector3 targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 targetPosition = transform.position;
+            targetPosition.x += (System.Convert.ToInt32(Input.GetKey(KeyCode.D)) - (System.Convert.ToInt32(Input.GetKey(KeyCode.A))));
+            targetPosition.y += (System.Convert.ToInt32(Input.GetKey(KeyCode.W)) - (System.Convert.ToInt32(Input.GetKey(KeyCode.S))));
 
-            //Vector3 targetPosition = transform.position;
             //targetPosition.x += Input.GetAxis("Horizontal");
             //targetPosition.y += Input.GetAxis("Vertical");
             targetPosition.z = 0.0f;
 
             float currentSpeed = cursorSpeed;
-            if (Physics2D.RaycastNonAlloc(transform.position, Vector2.zero, cursorRaycast, float.MaxValue, targets) > 0) {
+            if (Physics2D.RaycastNonAlloc(transform.position, Vector2.zero, cursorRaycast, float.MaxValue, magneticLayers) > 0) {
                 if (doesSlow) {
                     currentSpeed = slowAttributes.Speed;
                 }
 
                 if (doesSnap) {
-                    // If no input has occurred begin snapping the cursor object 
                     if (transform.position == targetPosition) {
                         targetPosition = cursorRaycast[0].collider.transform.position;
                         currentSpeed = snapAttributes.Speed;

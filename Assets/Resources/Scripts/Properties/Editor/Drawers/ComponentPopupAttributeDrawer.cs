@@ -3,10 +3,9 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Resources.Utils;
-using Resources.UI;
+using Resource.Utils;
 
-namespace Resources.Properties {
+namespace Resource.Properties {
 
     [CustomPropertyDrawer(typeof(ComponentPopupAttribute))]
     public class ComponentPopupAttributeDrawer : BasePropertyDrawer {

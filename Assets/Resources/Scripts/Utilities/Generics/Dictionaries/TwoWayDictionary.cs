@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Resources.Utils {
+namespace Resource.Utils {
 
     /// <summary>
     /// TwTwo-Wayictionary Class

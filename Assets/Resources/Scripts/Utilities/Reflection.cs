@@ -1,11 +1,12 @@
-using UnityEngine;
-using System.Collections;
+using UnityEditor;
 using System.Reflection;
 using System;
 
-namespace Resources.Utils {
+namespace Resource.Utils {
 
     public static class Reflection {
+
+        #region Property Values
         public static T GetPrivatePropertyValue<T>(this object aObject, string aPropertyName) {
             if (aObject == null) {
                 throw new ArgumentNullException("aObject");
@@ -28,7 +29,9 @@ namespace Resources.Utils {
 
             type.InvokeMember(aPropertyName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.SetProperty | BindingFlags.Instance, null, aObject, new object[] { aValue });
         }
+        #endregion
 
+        #region Field Values
         public static T GetPrivateFieldValue<T>(this object aObject, string aFieldName) {
             if (aObject == null) {
                 throw new ArgumentNullException("aObject");
@@ -68,6 +71,7 @@ namespace Resources.Utils {
 
             field.SetValue(aObject, aValue);
         }
+        #endregion
     }
 
 }

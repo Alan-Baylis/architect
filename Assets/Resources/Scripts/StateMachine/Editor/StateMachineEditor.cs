@@ -3,10 +3,10 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Resources.States;
-using Resources.Utils;
+using Resource.States;
+using Resource.Utils;
 
-namespace Resources.Editor {
+namespace Resource.Editor {
 
     [CustomEditor(typeof(StateMachine), true)]
     [CanEditMultipleObjects]

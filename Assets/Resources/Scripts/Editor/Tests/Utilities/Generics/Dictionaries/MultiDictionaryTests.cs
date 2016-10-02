@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using Resources.Utils;
+using Resource.Utils;
 using NUnit.Framework;
 
 [TestFixture]

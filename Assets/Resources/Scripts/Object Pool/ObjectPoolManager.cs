@@ -1,8 +1,7 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
-namespace Resources.Pooling {
+namespace Resource.Pooling {
 
     /// <summary>
     /// Manager to handle and contain all of the pools of the given type
@@ -12,7 +11,6 @@ namespace Resources.Pooling {
         private static ObjectPoolManager instance;
 
         private Dictionary<string, ObjectPool> pools = new Dictionary<string, ObjectPool>();
-        private readonly Object poolsLock = new Object();
 
         #region Getters & Setters
         public static ObjectPoolManager Instance {
@@ -31,16 +29,14 @@ namespace Resources.Pooling {
         /// Add an Object Pool to the map of pools using the GameObject's name as a key
         /// </summary>
         public void Add(GameObject aObject, ObjectPool aObjectPool) {
-            Add(aObject.name, aObjectPool);
+            pools[aObject.name] = aObjectPool;
         }
 
         /// <summary>
         /// Add an Object Pool to the map of pools using the string as a key
         /// </summary>
         public void Add(string aKey, ObjectPool aObjectPool) {
-            lock (poolsLock) {
-                pools[aKey] = aObjectPool;
-            }
+            pools[aKey] = aObjectPool;
         }
 
         /// <summary>
@@ -54,31 +50,27 @@ namespace Resources.Pooling {
         /// Get the pool associated with the given key
         /// </summary>
         public ObjectPool Get(string aKey) {
-            lock (poolsLock) {
-                ObjectPool pool;
+            ObjectPool pool;
 
-                if (pools.TryGetValue(aKey, out pool) == false) {
-                    Debug.LogWarning(string.Format("Pool with key '{0}' does not exist within the pools mapping", aKey));
-                }
-
-                return pool;
+            if (pools.TryGetValue(aKey, out pool) == false) {
+                Debug.LogWarning(string.Format("Pool with key '{0}' does not exist within the pools mapping", aKey));
             }
+
+            return pool;
         }
 
         /// <summary>
         /// Remove the pool associated to the GameObject's name (key)
         /// </summary>
         public void Remove(GameObject aObject) {
-            Remove(aObject.name);
+            pools.Remove(aObject.name);
         }
 
         /// <summary>
         /// Remove the pool associated with the given key
         /// </summary>
         public void Remove(string aKey) {
-            lock (poolsLock) {
-                pools.Remove(aKey);
-            }
+            pools.Remove(aKey);
         }
         #endregion
 
@@ -89,10 +81,10 @@ namespace Resources.Pooling {
 
         public void Clear() {
             foreach (ObjectPool pool in pools.Values) {
-                GameObject.Destroy(pool.gameObject);
+                if (pool.CanDestroy) {
+                    GameObject.Destroy(pool.gameObject);
+                }
             }
-
-            pools.Clear();
         }
         #endregion
 

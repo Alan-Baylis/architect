@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Resources.Utils {
+namespace Resource.Utils {
 
     /// <summary>
     /// Multi-Dictionary Class

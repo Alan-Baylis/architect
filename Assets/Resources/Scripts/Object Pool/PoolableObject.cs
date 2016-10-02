@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Resources.Pooling {
+namespace Resource.Pooling {
 
     public class PoolableObject : MonoBehaviour {
         private ObjectPool containingPool;

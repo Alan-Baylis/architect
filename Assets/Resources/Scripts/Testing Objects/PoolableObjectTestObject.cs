@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using Resources.Pooling;
+using Resource.Pooling;
 
 namespace Testing {
 

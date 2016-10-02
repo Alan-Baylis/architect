@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using Resources.States;
+using Resource.States;
 
 namespace Architect.States.Editor {
 

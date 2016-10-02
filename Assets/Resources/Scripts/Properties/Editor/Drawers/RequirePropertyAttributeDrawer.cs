@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace Resources.Properties {
+namespace Resource.Properties {
 
     [CustomPropertyDrawer(typeof(RequirePropertyAttribute))]
     public class RequirePropertyAttributeDrawer : BasePropertyDrawer {

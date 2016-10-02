@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Resources.Utils {
+namespace Resource.Utils {
 
     /// <summary>
     /// Generic Dictionary Class
