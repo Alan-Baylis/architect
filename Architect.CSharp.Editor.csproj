@@ -100,8 +100,8 @@
     <Compile Include="Assets\Resources\Scripts\Editor\EditorConstants.cs" />
     <Compile Include="Assets\Resources\Scripts\Editor\Tests\Object Pool\ObjectPoolTests.cs" />
     <Compile Include="Assets\Resources\Scripts\Editor\Tests\Utilities\Generics\Dictionaries\MultiDictionaryTests.cs" />
-    <Compile Include="Assets\Resources\Scripts\Editor\Utilities\AnimationHierarchyEditor.cs" />
-    <Compile Include="Assets\Resources\Scripts\Editor\Utilities\ComponentUsageEditor.cs" />
+    <Compile Include="Assets\Resources\Scripts\Editor\Utilities\AnimationHierarchyFixer.cs" />
+    <Compile Include="Assets\Resources\Scripts\Editor\Utilities\ReferenceFinder.cs" />
     <Compile Include="Assets\Resources\Scripts\Editor\Utilities\uGUITools.cs" />
     <Compile Include="Assets\Resources\Scripts\Properties\Editor\Drawers\BasePropertyDrawer.cs" />
     <Compile Include="Assets\Resources\Scripts\Properties\Editor\Drawers\ComponentPopupAttributeDrawer.cs" />
