@@ -5,16 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4B23502D-F5E9-6B2E-CA3A-3F42C9344433}</ProjectGuid>
+    <ProjectGuid>{FC887A32-DB72-AB57-BB8D-79409B287882}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Web v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>WebPlayer:6</UnityBuildTarget>
     <UnityVersion>5.3.3p3</UnityVersion>
     <RootNamespace></RootNamespace>
@@ -61,47 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Resources\Scripts\Camera\EditorCameraMovement.cs" />
-    <Compile Include="Assets\Resources\Scripts\Object Pool\ObjectPool.cs" />
-    <Compile Include="Assets\Resources\Scripts\Object Pool\ObjectPoolManager.cs" />
-    <Compile Include="Assets\Resources\Scripts\Object Pool\PoolableObject.cs" />
-    <Compile Include="Assets\Resources\Scripts\Object Pool\SingletonObjectPool.cs" />
-    <Compile Include="Assets\Resources\Scripts\Properties\Attributes\ComponentPopupAttribute.cs" />
-    <Compile Include="Assets\Resources\Scripts\Properties\Attributes\EnumFlagsAttribute.cs" />
-    <Compile Include="Assets\Resources\Scripts\Properties\Attributes\LimitedRangeAttribute.cs" />
-    <Compile Include="Assets\Resources\Scripts\Properties\Attributes\ReadOnlyAttribute.cs" />
-    <Compile Include="Assets\Resources\Scripts\Properties\Attributes\RequirePropertyAttribute.cs" />
-    <Compile Include="Assets\Resources\Scripts\Random\RandomExt.cs" />
-    <Compile Include="Assets\Resources\Scripts\StateMachine\State.cs" />
-    <Compile Include="Assets\Resources\Scripts\StateMachine\StateMachine.cs" />
-    <Compile Include="Assets\Resources\Scripts\Structs\LimitedRange.cs" />
-    <Compile Include="Assets\Resources\Scripts\Testing Objects\PoolableObjectTestObject.cs" />
-    <Compile Include="Assets\Resources\Scripts\Testing Objects\TestEnum.cs" />
-    <Compile Include="Assets\Resources\Scripts\Testing Objects\TestObject.cs" />
-    <Compile Include="Assets\Resources\Scripts\UI\Elements\Cursor\MagneticCursor.cs" />
-    <Compile Include="Assets\Resources\Scripts\UI\Elements\Fade\FadeElement.cs" />
-    <Compile Include="Assets\Resources\Scripts\UI\Elements\Gizmos\Gizmo.cs" />
-    <Compile Include="Assets\Resources\Scripts\UI\Elements\Gizmos\PositionGizmo.cs" />
-    <Compile Include="Assets\Resources\Scripts\UI\Elements\Gizmos\RotationGizmo.cs" />
-    <Compile Include="Assets\Resources\Scripts\UI\Elements\Gizmos\ScaleGizmo.cs" />
-    <Compile Include="Assets\Resources\Scripts\Utilities\EnumUtils.cs" />
-    <Compile Include="Assets\Resources\Scripts\Utilities\Generics\Dictionaries\GenericDictionary.cs" />
-    <Compile Include="Assets\Resources\Scripts\Utilities\Generics\Dictionaries\MultiDictionary.cs" />
-    <Compile Include="Assets\Resources\Scripts\Utilities\Generics\Dictionaries\TwoWayDictionary.cs" />
-    <Compile Include="Assets\Resources\Scripts\Utilities\Generics\Singletons\FiniteSingleton.cs" />
-    <Compile Include="Assets\Resources\Scripts\Utilities\Generics\Singletons\Singleton.cs" />
-    <Compile Include="Assets\Resources\Scripts\Utilities\MathUtils.cs" />
-    <Compile Include="Assets\Resources\Scripts\Utilities\Reflection.cs" />
-    <Compile Include="Assets\Resources\Scripts\Utilities\StringUtils.cs" />
-    <Compile Include="Assets\Scripts\Data\Levels\LevelData.cs" />
-    <Compile Include="Assets\Scripts\Data\Levels\ModuleData.cs" />
-    <Compile Include="Assets\Scripts\Level Editor\EditorEditLevel.cs" />
-    <Compile Include="Assets\Scripts\Level Editor\EditorLoadLevel.cs" />
-    <Compile Include="Assets\Scripts\Level Editor\EditorMainMenu.cs" />
-    <Compile Include="Assets\Scripts\Level Editor\EditorSaveLevel.cs" />
-    <Compile Include="Assets\Scripts\Level Editor\EditorSharedData.cs" />
-    <Compile Include="Assets\Scripts\Managers\ArchitectManager.cs" />
-    <Compile Include="Assets\Scripts\Managers\InputManager.cs" />
+    <Compile Include="Assets\Standard Assets\Camera Scripts\MouseLook.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
